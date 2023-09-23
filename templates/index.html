@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <div class="search_options">
+        <form class="number">
+            <a class="minus" href="/decrease/{{ bills_amount }}">-</a>
+            <input type="text" value="{{ bills_amount }}" size="5"/>
+            <a class="plus" href="/increase/{{ bills_amount }}">+</a>
+            <a class="show_button" href="/show/{{ bills_amount }}">Show bills list</a>
+        </form>
+    </div>
+
+    <div class="bills_list">
+        {% for bill in bills_list %}
+            {{ bill }}
+        {% endfor %}
+    </div>
+{% endblock %}
