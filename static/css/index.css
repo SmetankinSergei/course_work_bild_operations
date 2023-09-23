@@ -8,6 +8,7 @@
     flex-direction: inline;
     justify-content: space-between;
     margin: 0 auto;
+    margin-top: 10px;
 }
 
 .selector div {
