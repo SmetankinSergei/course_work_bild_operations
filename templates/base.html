@@ -15,17 +15,20 @@
     <body>
         <header>
             {% block header %}
-                <img class="label_img" src="" alt="label image">
-                <h1 class="main_name">Bild operations</h1>
+                <h1 class="main_name">Bills manager</h1>
             {% endblock %}
         </header>
 
         <div class="body_bg">
+            <div class="top_correction"></div>
             {% block body %}{% endblock %}
+            <div class="bottom_correction"></div>
         </div>
 
         <footer>
-            {% block footer %}{% endblock %}
+            {% block footer %}
+                <div class="footer_text">this is footer</div>
+            {% endblock %}
         </footer>
     </body>
 

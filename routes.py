@@ -1,6 +1,5 @@
-from flask import render_template, redirect, url_for, request
+from flask import render_template, redirect, url_for
 
-import DAO
 import main
 import utils
 from main import app
@@ -13,8 +12,15 @@ def home():
 
 @app.get('/show/<int:bills_amount>')
 def show_bild_list(bills_amount):
-    bills_list = DAO.get_bills_list(bills_amount)
+    bills_list = utils.get_bills_list(bills_amount)
     main.bills_list = utils.create_list_for_output(bills_list)
+    return redirect(url_for('home'))
+
+
+@app.get('/cancel')
+def cancel_number():
+    main.bills_amount = '1'
+    main.bills_list = []
     return redirect(url_for('home'))
 
 

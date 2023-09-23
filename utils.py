@@ -1,3 +1,6 @@
+import DAO
+
+
 def create_list_for_output(bills_list):
     result_list = []
     for bill in bills_list:
@@ -6,7 +9,9 @@ def create_list_for_output(bills_list):
         from_description = get_accounts_description(bill)[0]
         to_description = get_accounts_description(bill)[1]
         amount = bill['operationAmount']['amount'] + ' ' + bill['operationAmount']['currency']['name']
-        result_list.append(f'{bill_date} {bill["description"]}\n{from_description} -> {to_description}\n{amount}\n')
+        result_list.append([f'{bill_date} {bill["description"]}',
+                            f'{from_description} -> {to_description}',
+                            f'{amount}\n'])
     return result_list
 
 
@@ -19,9 +24,29 @@ def get_number_mask(number):
 
 def get_accounts_description(bill):
     if bill['description'] == 'Открытие вклада':
-        to_description = ' '.join(bill['to'].split()[:-1]) + ' ' + get_number_mask(bill['to'].split()[-1])
-        return 'open', to_description
+        from_description = 'open'
     else:
         from_description = ' '.join(bill['from'].split()[:-1]) + ' ' + get_number_mask(bill['from'].split()[-1])
-        to_description = ' '.join(bill['to'].split()[:-1]) + ' ' + get_number_mask(bill['to'].split()[-1])
-        return from_description, to_description
+    to_description = ' '.join(bill['to'].split()[:-1]) + ' ' + get_number_mask(bill['to'].split()[-1])
+    return from_description, to_description
+
+
+def get_bills_list(bills_amount):
+    all_data = DAO.get_all_data()
+    bills_list = sort_bills(all_data)
+    result_list = []
+    for bill in bills_list:
+        if bill['state'] == 'EXECUTED':
+            result_list.append(bill)
+            bills_amount -= 1
+            if bills_amount == 0:
+                return result_list
+    return result_list
+
+
+def sort_bills(all_data):
+    bills_list = []
+    for item in all_data:
+        if item != {}:
+            bills_list.append(item)
+    return list(sorted(bills_list, key=lambda x: x['date'], reverse=True))
