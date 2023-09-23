@@ -4,10 +4,9 @@ import DAO
 def create_list_for_output(bills_list):
     result_list = []
     for bill in bills_list:
-        bill_date_list = bill['date'][:10].split('-')
-        bill_date = bill_date_list[2] + '.' + bill_date_list[1] + '.' + bill_date_list[0]
-        from_description = get_accounts_description(bill)[0]
-        to_description = get_accounts_description(bill)[1]
+        bill_date_list = bill['date'][:10].split('-')[::-1]
+        bill_date = '.'.join(bill_date_list)
+        from_description, to_description = get_accounts_description(bill)
         amount = bill['operationAmount']['amount'] + ' ' + bill['operationAmount']['currency']['name']
         result_list.append([f'{bill_date} {bill["description"]}',
                             f'{from_description} -> {to_description}',
@@ -47,6 +46,15 @@ def get_bills_list(bills_amount):
 def sort_bills(all_data):
     bills_list = []
     for item in all_data:
-        if item != {}:
+        if check_valid_data(item):
             bills_list.append(item)
     return list(sorted(bills_list, key=lambda x: x['date'], reverse=True))
+
+
+def check_valid_data(item):
+    required_list = ['state', 'description', 'from', 'date', 'operationAmount']
+    keys = item.keys()
+    for element in required_list:
+        if element not in keys:
+            return False
+    return True
