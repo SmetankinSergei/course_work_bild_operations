@@ -13,7 +13,7 @@ def get_bills_list(bills_amount):
                 return result_list
     return result_list
 
-
+qweqweqwe
 def create_list_for_output(bills_list):
     result_list = []
     for bill in bills_list:
