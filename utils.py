@@ -2,6 +2,7 @@ import DAO
 
 
 def get_bills_list(bills_amount):
+    """Возвращает список операций по заданным параметрам (bills_amount, bill['state'] == 'EXECUTED')"""
     all_data = DAO.get_all_data()
     bills_list = sort_bills(all_data)
     result_list = []
@@ -13,8 +14,9 @@ def get_bills_list(bills_amount):
                 return result_list
     return result_list
 
-qweqweqwe
+
 def create_list_for_output(bills_list):
+    """Собирает список строк из списка операций для отображения на странице"""
     result_list = []
     for bill in bills_list:
         bill_date_list = bill['date'][:10].split('-')[::-1]
@@ -28,6 +30,7 @@ def create_list_for_output(bills_list):
 
 
 def get_accounts_description(bill):
+    """Собирает из информации об операции строки 'откуда' и 'куда'"""
     if bill['description'] == 'Открытие вклада':
         from_description = 'open'
     elif 'from' in bill.keys():
@@ -39,6 +42,7 @@ def get_accounts_description(bill):
 
 
 def get_number_mask(number):
+    """Возвращает маску счёта или карты"""
     if len(number) == 16:
         return number[:4] + ' ' + number[4:6] + '** **** ' + number[12:]
     elif len(number) == 20:
@@ -46,6 +50,7 @@ def get_number_mask(number):
 
 
 def sort_bills(all_data):
+    """Сортирует операции"""
     bills_list = []
     for item in all_data:
         if check_valid_data(item):
@@ -54,6 +59,7 @@ def sort_bills(all_data):
 
 
 def check_valid_data(item):
+    """Проверяет валидность данных в счёте. В настоящей программе я бы проверил и вложенные словари.."""
     required_list = ['state', 'description', 'to', 'date', 'operationAmount']
     keys = item.keys()
     for element in required_list:
