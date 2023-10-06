@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Bills operations{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div class="search_options">
+        <form class="number">
+            <div class="selector">
+                <a class="select_button" href="/decrease/{{ bills_amount }}">
+                    <div>-</div>
+                </a>
+                <div class="amount">{{ bills_amount }}</div>
+                <a class="select_button" href="/increase/{{ bills_amount }}">
+                    <div>+</div>
+                </a>
+            </div>
+
+            <div class="main_buttons">
+                <a class="show_button" href="/show/{{ bills_amount }}">
+                    <div>show bills list</div>
+                </a>
+                <a class="cancel_button" href="/cancel">
+                    <div>cancel</div>
+                </a>
+            </div>
+        </form>
+    </div>
+
+    <div class="bills_list">
+        {% for bill in bills_list %}
+            {{ bill[0] }}
+            <br>
+            {{ bill[1] }}
+            <br>
+            {{ bill[2] }}
+            <br>
+            <div class="empty_space"></div>
+        {% endfor %}
+    </div>
+{% endblock %}
