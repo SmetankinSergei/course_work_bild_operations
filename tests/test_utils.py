@@ -34,3 +34,11 @@ def test_sort_bills(data_list, expected):
                                               ('12341234123412341234', '**1234')])
 def test_get_number_mask(number, expected):
     assert get_number_mask(number) == expected
+
+
+@pytest.mark.parametrize('bill, expected', [(constants.ITEM, ('Maestro 1596 83** **** 5199', 'Счет **9589')),
+                                            (constants.ITEM_3, ('open', 'Счет **2431')),
+                                            (constants.ITEM_4, ('unknown sender', 'Счет **6366'))])
+def test_get_accounts_description(bill, expected):
+    assert get_accounts_description(bill) == expected
+
