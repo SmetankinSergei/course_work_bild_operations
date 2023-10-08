@@ -3,7 +3,8 @@ import pytest
 import app_state
 import constants
 import main
-from utils import check_valid_data, sort_bills, get_bills_list
+from utils import check_valid_data, sort_bills, get_bills_list, get_number_mask, get_accounts_description, \
+    create_list_for_output
 
 
 @pytest.fixture(autouse=True)
@@ -30,7 +31,19 @@ def test_sort_bills(data_list, expected):
     assert sort_bills(data_list) == expected
 
 
-# @pytest.mark.parametrize('number, expected', [('1234123412341234', '1234 12** **** 1234'),
-#                                               ('12341234123412341234', '**1234')])
-# def test_get_number_mask(number, expected):
-#     assert test_get_number_mask(number) == expected
+@pytest.mark.parametrize('number, expected', [('1234123412341234', '1234 12** **** 1234'),
+                                              ('12341234123412341234', '**1234')])
+def test_get_number_mask(number, expected):
+    assert get_number_mask(number) == expected
+
+
+@pytest.mark.parametrize('bill, expected', [(constants.ITEM, ('Maestro 1596 83** **** 5199', 'Счет **9589')),
+                                            (constants.ITEM_3, ('open', 'Счет **2431')),
+                                            (constants.ITEM_4, ('unknown sender', 'Счет **6366'))])
+def test_get_accounts_description(bill, expected):
+    assert get_accounts_description(bill) == expected
+
+
+@pytest.mark.parametrize('bills_list, expected', [(constants.DATA_LIST, constants.DATA_LIST_FOR_PRINT)])
+def test_create_list_for_output(bills_list, expected):
+    assert create_list_for_output(bills_list) == expected
