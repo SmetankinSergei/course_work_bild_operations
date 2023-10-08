@@ -42,3 +42,8 @@ def test_get_number_mask(number, expected):
 def test_get_accounts_description(bill, expected):
     assert get_accounts_description(bill) == expected
 
+
+@pytest.mark.parametrize('bills_list, expected', [(constants.DATA_LIST, constants.DATA_LIST_FOR_PRINT)])
+def test_create_list_for_output(bills_list, expected):
+    assert create_list_for_output(bills_list) == expected
+
