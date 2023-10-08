@@ -3,7 +3,8 @@ import pytest
 import app_state
 import constants
 import main
-from utils import check_valid_data, sort_bills, get_bills_list
+from utils import check_valid_data, sort_bills, get_bills_list, get_number_mask, get_accounts_description, \
+    create_list_for_output
 
 
 @pytest.fixture(autouse=True)
@@ -46,4 +47,3 @@ def test_get_accounts_description(bill, expected):
 @pytest.mark.parametrize('bills_list, expected', [(constants.DATA_LIST, constants.DATA_LIST_FOR_PRINT)])
 def test_create_list_for_output(bills_list, expected):
     assert create_list_for_output(bills_list) == expected
-
