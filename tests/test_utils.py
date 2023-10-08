@@ -30,7 +30,7 @@ def test_sort_bills(data_list, expected):
     assert sort_bills(data_list) == expected
 
 
-# @pytest.mark.parametrize('number, expected', [('1234123412341234', '1234 12** **** 1234'),
-#                                               ('12341234123412341234', '**1234')])
-# def test_get_number_mask(number, expected):
-#     assert test_get_number_mask(number) == expected
+@pytest.mark.parametrize('number, expected', [('1234123412341234', '1234 12** **** 1234'),
+                                              ('12341234123412341234', '**1234')])
+def test_get_number_mask(number, expected):
+    assert get_number_mask(number) == expected
